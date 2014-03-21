@@ -22,6 +22,11 @@
     }
 }
 
+-(void)stopListeningForUpdates {
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
 -(void)listenForPasteBoardUpdates {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(pasteboardTick:) userInfo:Nil repeats:YES];
 }
@@ -29,9 +34,24 @@
 -(id)init {
     if (self = [super init]) {
         // Init setup
+        self.objectList = [[NSMutableArray alloc] init];
     }
     return self;
 }
+
+-(void)pushObjectsToList:(NSArray *)copiedItems {
+    for (id obj in copiedItems) {
+        if ([obj isKindOfClass:[NSString class]]) {
+            NSString * objStr = (NSString *)obj;
+            if ([self.objectList containsObject:objStr]) {
+                [self.objectList removeObject:objStr];
+            }
+        }
+        [self.objectList addObject:obj];
+    }
+    
+}
+
 
 -(void)pasteboardTick:(NSTimer *)timer {
     
@@ -41,7 +61,7 @@
         NSDictionary *options = [NSDictionary dictionary];
         NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
         if (copiedItems != nil) {
-            NSLog(@"%@",copiedItems);
+            [self pushObjectsToList:copiedItems];
         }
     }
     

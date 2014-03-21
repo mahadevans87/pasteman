@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6037394218DBFB64001E261E /* PasteManCoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6037394118DBFB64001E261E /* PasteManCoreTests.m */; };
 		60F6036A18DADD14005F865A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F6036918DADD14005F865A /* Cocoa.framework */; };
 		60F6037418DADD14005F865A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60F6037218DADD14005F865A /* InfoPlist.strings */; };
 		60F6037618DADD14005F865A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F6037518DADD14005F865A /* main.m */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6037394118DBFB64001E261E /* PasteManCoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasteManCoreTests.m; sourceTree = "<group>"; };
 		60F6036618DADD14005F865A /* PasteMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasteMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60F6036918DADD14005F865A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		60F6036C18DADD14005F865A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -145,6 +147,7 @@
 			children = (
 				60F6039318DADD14005F865A /* PasteManTests.m */,
 				60F6038E18DADD14005F865A /* Supporting Files */,
+				6037394118DBFB64001E261E /* PasteManCoreTests.m */,
 			);
 			path = PasteManTests;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60F6039418DADD14005F865A /* PasteManTests.m in Sources */,
+				6037394218DBFB64001E261E /* PasteManCoreTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +482,7 @@
 				60F6039918DADD14005F865A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		60F6039A18DADD15005F865A /* Build configuration list for PBXNativeTarget "PasteManTests" */ = {
 			isa = XCConfigurationList;
@@ -486,6 +491,7 @@
 				60F6039C18DADD15005F865A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
