@@ -12,7 +12,7 @@
 
 @property NSInteger previousChangeCount;
 @property (strong) NSTimer * timer;
-@property (strong) NSMutableArray * objectList;
+@property (atomic, strong) NSMutableArray * objectList;
 
 +(PasteManCore *)sharedCore;
 
@@ -20,5 +20,7 @@
 -(void)stopListeningForUpdates;
 
 -(void)pushObjectsToList:(NSArray *)copiedItems;
+
+-(void)addItemToSystemPasteBoard:(id)object;
 
 @end

@@ -8,9 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PasteManCore.h"
+#import "AppController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-
+@property (nonatomic, strong) AppController * appController;
 @end

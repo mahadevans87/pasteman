@@ -13,6 +13,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [[PasteManCore sharedCore] listenForPasteBoardUpdates];
+    self.appController = [[AppController alloc] init];
+    [self.appController setupStatusBar];
+    
 }
 
 @end

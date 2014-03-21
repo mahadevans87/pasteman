@@ -53,6 +53,12 @@
 }
 
 
+-(void)addItemToSystemPasteBoard:(id)object {
+    NSPasteboard * pasteBoard = [NSPasteboard generalPasteboard];
+    [pasteBoard clearContents];
+    [pasteBoard writeObjects:[NSArray arrayWithObjects:object,nil]];
+
+}
 -(void)pasteboardTick:(NSTimer *)timer {
     
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
