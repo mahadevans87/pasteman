@@ -89,4 +89,34 @@
     XCTAssertFalse(duplicateFound, @"Duplicate strings found in list");
 }
 
+-(void)testThatDuplicateStringsAreAvoidedAndAreMovedToTheLastOfTheObjectList {
+    [[PasteManCore sharedCore] listenForPasteBoardUpdates];
+    
+    NSString * testString = @"Test with some object. How about tha2t!";
+    NSString * testString2 = @"Test with some object. How about tha2t!";
+    NSString * nonDuplicate = @"NOn duplicate object";
+    NSString * testString3 = @"Test with some object. How about tha2t!";
+    
+    [self addObjectsToPasteBoard:[NSArray arrayWithObjects:testString, testString2,nonDuplicate,testString3, nil]];
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.5]];
+    NSArray * objStack = [[PasteManCore sharedCore] objectList];
+    
+    NSInteger indexOfNonDuplicate = -1;
+    NSInteger indexOfTestString3 = -1;
+    for (id obj in objStack) {
+        if ([obj isKindOfClass:[NSString class]]) {
+            NSString * objStr = (NSString *)obj;
+            if ([objStr isEqualToString:nonDuplicate]) {
+                indexOfNonDuplicate = [objStack indexOfObject:objStr];
+            }
+            if ([objStr isEqualToString:testString3]) {
+                indexOfTestString3 = [objStack indexOfObject:testString3];
+            }
+
+        }
+    }
+    XCTAssertTrue(indexOfNonDuplicate < indexOfTestString3, @"Duplicate string is more recent than teststring3");
+    
+}
+
 @end
