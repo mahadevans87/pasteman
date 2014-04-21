@@ -7,6 +7,7 @@
 //
 
 #import "PasteManCore.h"
+#import "PasteManItem.h"
 
 @implementation PasteManCore
 
@@ -41,15 +42,30 @@
 
 -(void)pushObjectsToList:(NSArray *)copiedItems {
     for (id obj in copiedItems) {
+        PasteManItem *item = nil;
         if ([obj isKindOfClass:[NSString class]]) {
-            NSString * objStr = (NSString *)obj;
-            if ([self.objectList containsObject:objStr]) {
-                [self.objectList removeObject:objStr];
-            }
+            item = [[PasteManItem alloc] initWithString:obj];
+        } else if ([obj isKindOfClass:[NSImage class]]) {
+            item = [[PasteManItem alloc] initWithImage:obj];
         }
-        [self.objectList addObject:obj];
+        
+        if (item) {
+            // Check for duplicate items
+            PasteManItem *removeObject = nil;
+            for (id object in self.objectList) {
+                if ([item isEqual:(PasteManItem *)object]) {
+                    removeObject = object;
+                    break;
+                }
+            }
+            if (removeObject) {
+                [self.objectList removeObject:removeObject];
+            }
+            [self.objectList addObject:item];
+        }else {
+            [self.objectList addObject:obj];
+        }
     }
-    
 }
 
 

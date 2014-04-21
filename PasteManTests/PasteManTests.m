@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "PasteManCore.h"
+#import "PasteManItem.h"
 
 @interface PasteManTests : XCTestCase
 {
@@ -43,7 +44,8 @@
     [self addObjectsToPasteBoard:[NSArray arrayWithObjects:testString, nil]];
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.5]];
     NSArray * objStack = [[PasteManCore sharedCore] objectList];
-    XCTAssertEqualObjects(testString, [objStack firstObject], @"First object in stack should be Test");
+    PasteManItem * firstItem = [objStack firstObject];
+    XCTAssertEqualObjects(testString, firstItem.item, @"First object in stack should be Test");
 }
 
 -(void)testThatMultipleStringsCanBeAddedToTheList {
@@ -57,10 +59,22 @@
     [self addObjectsToPasteBoard:[NSArray arrayWithObjects:testString, testString2, testString3, testString4, nil]];
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.5]];
     NSArray * objStack = [[PasteManCore sharedCore] objectList];
-    XCTAssertEqualObjects(testString, [objStack objectAtIndex:(objStack.count - 4)], @"First object in stack should be same as testString");
-    XCTAssertEqualObjects(testString2, [objStack objectAtIndex:(objStack.count - 3)], @"Second object in stack should be same as testString2");
-    XCTAssertEqualObjects(testString3, [objStack objectAtIndex:(objStack.count - 2)], @"Third object in stack should be same as testString3");
-    XCTAssertEqualObjects(testString4, [objStack lastObject], @"Fourth object in stack should be same as testString4");
+    PasteManItem * pManItem = [objStack objectAtIndex:(objStack.count - 4)];
+    XCTAssertEqualObjects(testString, pManItem.item, @"First object in stack should be same as testString");
+
+    PasteManItem * pManItem1 = [objStack objectAtIndex:(objStack.count - 3)];
+
+    XCTAssertEqualObjects(testString2, pManItem1.item, @"Second object in stack should be same as testString2");
+
+    
+    PasteManItem * pManItem2 = [objStack objectAtIndex:(objStack.count - 2)];
+
+    XCTAssertEqualObjects(testString3, pManItem2.item, @"Third object in stack should be same as testString3");
+
+    
+    PasteManItem * pManItem3 = [objStack lastObject];
+
+    XCTAssertEqualObjects(testString4, pManItem3.item, @"Fourth object in stack should be same as testString4");
     
 }
 
@@ -104,13 +118,15 @@
     NSInteger indexOfNonDuplicate = -1;
     NSInteger indexOfTestString3 = -1;
     for (id obj in objStack) {
-        if ([obj isKindOfClass:[NSString class]]) {
-            NSString * objStr = (NSString *)obj;
-            if ([objStr isEqualToString:nonDuplicate]) {
-                indexOfNonDuplicate = [objStack indexOfObject:objStr];
-            }
-            if ([objStr isEqualToString:testString3]) {
-                indexOfTestString3 = [objStack indexOfObject:testString3];
+        if ([obj isKindOfClass:[PasteManItem class]]) {
+            PasteManItem * pManItem = (PasteManItem *)obj;
+            if (pManItem.pasteManItemType == kPasteManItemTypeNSString) {
+                if ([pManItem.item isEqualToString:nonDuplicate]) {
+                    indexOfNonDuplicate = [objStack indexOfObject:pManItem];
+                }
+                if ([pManItem.item isEqualToString:testString3]) {
+                    indexOfTestString3 = [objStack indexOfObject:pManItem];
+                }
             }
 
         }
@@ -118,5 +134,45 @@
     XCTAssertTrue(indexOfNonDuplicate < indexOfTestString3, @"Duplicate string is more recent than teststring3");
     
 }
+
+#pragma mark -
+#pragma mark - Unit test for NSImages
+
+-(void)testThatDuplicatesImagesAreAvoided {
+    [[PasteManCore sharedCore] listenForPasteBoardUpdates];
+    
+    NSImage *testImage = [NSImage imageNamed:@"trayIcon.png"];
+    NSImage *testImage2 = [NSImage imageNamed:@"trayIcon.png"];
+    NSImage *testImage3 = [NSImage imageNamed:@"trayIcon.png"];
+    
+    [self addObjectsToPasteBoard:[NSArray arrayWithObjects:testImage, testImage2,testImage3, nil]];
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.5]];
+    NSArray * objStack = [[PasteManCore sharedCore] objectList];
+    
+    // Check duplicate Image
+    BOOL duplicateFound = NO;
+    for (id obj in objStack) {
+        PasteManItem *item = (PasteManItem *)obj;
+        if (item.pasteManItemType == kPasteManItemTypeNSImage) {
+            
+            for (id nextObj in objStack) {
+                if ([objStack indexOfObject:obj] != [objStack indexOfObject:nextObj]) {
+                    if ([item isEqual:(PasteManItem *)nextObj]) {
+                        duplicateFound = YES;
+                        break;
+                    }
+                }
+            }
+            
+            if (duplicateFound) {
+                break;
+            }
+        }
+    }
+    
+    XCTAssertFalse(duplicateFound, @"Duplicate strings found in list");
+}
+
+
 
 @end

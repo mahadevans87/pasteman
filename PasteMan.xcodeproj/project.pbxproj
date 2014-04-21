@@ -10,6 +10,7 @@
 		6037394218DBFB64001E261E /* PasteManCoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6037394118DBFB64001E261E /* PasteManCoreTests.m */; };
 		60700DB218DC24AC00DAF9D1 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60700DB118DC24AC00DAF9D1 /* AppController.m */; };
 		60700DB918DC311300DAF9D1 /* trayIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 60700DB818DC311300DAF9D1 /* trayIcon.png */; };
+		60D076851905214400B8FA3A /* PasteManItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 60D076841905214400B8FA3A /* PasteManItem.m */; };
 		60F6036A18DADD14005F865A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F6036918DADD14005F865A /* Cocoa.framework */; };
 		60F6037418DADD14005F865A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60F6037218DADD14005F865A /* InfoPlist.strings */; };
 		60F6037618DADD14005F865A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F6037518DADD14005F865A /* main.m */; };
@@ -39,6 +40,8 @@
 		60700DB018DC24AC00DAF9D1 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = UserInterface/AppController.h; sourceTree = "<group>"; };
 		60700DB118DC24AC00DAF9D1 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppController.m; path = UserInterface/AppController.m; sourceTree = "<group>"; };
 		60700DB818DC311300DAF9D1 /* trayIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trayIcon.png; sourceTree = "<group>"; };
+		60D076831905214400B8FA3A /* PasteManItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PasteManItem.h; path = Core/PasteManItem.h; sourceTree = "<group>"; };
+		60D076841905214400B8FA3A /* PasteManItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PasteManItem.m; path = Core/PasteManItem.m; sourceTree = "<group>"; };
 		60F6036618DADD14005F865A /* PasteMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasteMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60F6036918DADD14005F865A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		60F6036C18DADD14005F865A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -197,6 +200,8 @@
 		60F6039D18DAE19E005F865A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				60D076831905214400B8FA3A /* PasteManItem.h */,
+				60D076841905214400B8FA3A /* PasteManItem.m */,
 				60F6039E18DAE1D8005F865A /* PasteManCore.h */,
 				60F6039F18DAE1D8005F865A /* PasteManCore.m */,
 			);
@@ -304,6 +309,7 @@
 			files = (
 				60F603A018DAE1D8005F865A /* PasteManCore.m in Sources */,
 				60F6037D18DADD14005F865A /* AppDelegate.m in Sources */,
+				60D076851905214400B8FA3A /* PasteManItem.m in Sources */,
 				60F6037618DADD14005F865A /* main.m in Sources */,
 				60700DB218DC24AC00DAF9D1 /* AppController.m in Sources */,
 			);

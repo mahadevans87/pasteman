@@ -8,6 +8,7 @@
 
 #import "AppController.h"
 #import "PasteManCore.h"
+#import "PasteManItem.h"
 
 @implementation AppController
 
@@ -33,7 +34,12 @@
 -(void)menuItemClicked:(id)sender {
     @synchronized([PasteManCore sharedCore].objectList) {
         id obj = [[PasteManCore sharedCore].objectList objectAtIndex:[sender tag]];
-        [[PasteManCore sharedCore] addItemToSystemPasteBoard:obj];
+        if ([obj isKindOfClass:[PasteManItem class]]) {
+            PasteManItem *pasteItem = (PasteManItem *)obj;
+            [[PasteManCore sharedCore] addItemToSystemPasteBoard:pasteItem.item];
+        }else {
+          [[PasteManCore sharedCore] addItemToSystemPasteBoard:obj];
+        }
     }
 }
 
@@ -42,21 +48,24 @@
         NSArray * objectList = [PasteManCore sharedCore].objectList;
         [self.trayMenu removeAllItems];
         for (id obj in [objectList reverseObjectEnumerator]) {
-            if ([obj isKindOfClass:[NSString class]]) {
-                NSMenuItem * menuItem = [self.trayMenu addItemWithTitle:obj action:@selector(menuItemClicked:) keyEquivalent:@""];
-                [menuItem setTarget:self];
-                menuItem.tag = [objectList indexOfObject:obj];
-            } else if ([obj isKindOfClass:[NSImage class]]) {
-                NSMenuItem * imgMenuItem = [[NSMenuItem alloc] init];
-                imgMenuItem.image = obj;
-                imgMenuItem.action = @selector(menuItemClicked:);
-                imgMenuItem.target = self;
-                imgMenuItem.title = @"";
-                [self.trayMenu addItem:imgMenuItem];
-                imgMenuItem.tag = [objectList indexOfObject:obj];
-                
+            if ([obj isKindOfClass:[PasteManItem class]]) {
+                PasteManItem *pastemanItem = (PasteManItem *)obj;
+                if (pastemanItem.pasteManItemType == kPasteManItemTypeNSString) {
+                    NSMenuItem * menuItem = [self.trayMenu addItemWithTitle:pastemanItem.item action:@selector(menuItemClicked:) keyEquivalent:@""];
+                    [menuItem setTarget:self];
+                    menuItem.tag = [objectList indexOfObject:obj];
+                } else if (pastemanItem.pasteManItemType == kPasteManItemTypeNSImage) {
+                    NSMenuItem * imgMenuItem = [[NSMenuItem alloc] init];
+                    PasteManItem *pasteItem = (PasteManItem *)obj;
+                    imgMenuItem.image = pasteItem.item;
+                    imgMenuItem.action = @selector(menuItemClicked:);
+                    imgMenuItem.target = self;
+                    imgMenuItem.title = @"";
+                    [self.trayMenu addItem:imgMenuItem];
+                    imgMenuItem.tag = [objectList indexOfObject:obj];
+                    
+                }
             }
-            
         }
     }
     
